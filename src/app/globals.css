@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 248 249 250;
+    --foreground: 30 33 36;
+    --font-size-body: 17.5px;
+    --line-height-body: 1.8;
+  }
+
+  .dark {
+    --background: 17 19 21;
+    --foreground: 248 249 250;
+  }
+
+  body {
+    @apply bg-[#F8F9FA] text-charcoal-900 dark:bg-charcoal-950 dark:text-gray-100 antialiased transition-colors duration-200;
+    font-family: 'Prompt', 'Noto Sans Thai', 'IBM Plex Sans Thai', Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+  }
+
+  @screen sm {
+    body {
+      font-size: 18px;
+      line-height: 1.75;
+    }
+  }
+
+  /* Improved Thai vowels and diacritics vertical spacing */
+  p, li, span, a, h1, h2, h3, h4, h5, h6 {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Lesson Content Font Size Control Tokens */
+.lesson-content-compact {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.lesson-content-compact p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.lesson-content-normal {
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.lesson-content-normal p {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.lesson-content-large {
+  font-size: 20px;
+  line-height: 1.85;
+}
+
+.lesson-content-large p {
+  font-size: 20px;
+  line-height: 1.85;
+  margin-bottom: 1.65rem;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af40;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af70;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
