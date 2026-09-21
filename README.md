@@ -1,271 +1,278 @@
 # Redbrick Robotics Academy 🤖
 
-An interactive web learning platform for **Linux Fundamentals**, **Ubuntu Linux**, and **ROS 2 Jazzy Jalisco for Robotics**, developed by **Redbrick Robotics**.
+แพลตฟอร์มเรียนรู้แบบโต้ตอบสำหรับ **Linux พื้นฐาน**, **Ubuntu Linux** และ **ROS 2 Jazzy Jalisco สำหรับงานหุ่นยนต์** พัฒนาโดย Redbrick Robotics
 
-This platform combines rich curriculum content with interactive, in-browser simulation environments—including a virtual Linux shell terminal with intelligent Tab completion, real-time ROS 2 computational graph visualization, and a 2D differential-drive mobile robot simulator with LiDAR and odometry telemetry.
+เนื้อหาภายในประกอบด้วยบทเรียนภาษาไทยและอังกฤษ Terminal สำหรับฝึกคำสั่ง ห้องทดลอง ROS 2 ตัวแก้ไขโค้ด Python/C++ และสนามทดลองหุ่นยนต์เคลื่อนที่ 2 มิติที่มี LiDAR, Odometry และระบบหลบสิ่งกีดขวางอัตโนมัติ
 
----
-
-## ⚡ Quick Start
+## เริ่มใช้งานอย่างรวดเร็ว
 
 ```bash
-# 1. Clone the repository
+# 1. ดาวน์โหลดโปรเจกต์
 git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
 cd Redbrick_Robotics_Academy
 
-# 2. Install dependencies
+# 2. เลือก Node.js ตาม .nvmrc และติดตั้ง dependency
+nvm use
 npm ci
 
-# 3. Start local development server
+# 3. เปิด Development Server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your web browser.
+เปิด <http://localhost:3000> ในเว็บเบราว์เซอร์
 
----
+หากยังไม่มี Node.js เวอร์ชันที่กำหนด:
 
-## ✨ Features
+```bash
+nvm install
+nvm use
+```
 
-- **Bilingual Learning (TH / EN)**: Full internationalization support across all lessons, navigation, callouts, quizzes, and simulation interfaces.
-- **Interactive Simulated Terminal**:
-  - In-browser virtual Linux file system (`/home/redbrick/ros2_ws`).
-  - Shell command execution (`ls`, `cd`, `pwd`, `mkdir`, `cat`, `touch`, `rm`, `source`, `colcon build`).
-  - Native **Tab Completion** for commands and file paths with support for flags, relative paths, and common prefixes.
-- **ROS 2 Jazzy Jalisco Integration**:
-  - **Stateful 10-Step Installation Lab**: Practice official ROS 2 installation on Ubuntu 24.04 LTS (Noble Numbat) with interactive error checking and step validation.
-  - **CLI Introspection**: Simulated tools for `ros2 node list`, `ros2 topic list -t`, `ros2 topic hz /scan`, and `ros2 doctor`.
-  - **Dual Language Code Practice**: Python (`rclpy`) and C++ (`rclcpp`) code examples with in-browser Run capability.
-  - **ROS 2 Computational Graph**: Graph topology visualizer showing active nodes, topics, publishers, and subscribers.
-  - **2D Mobile Robot Simulator**: Differential-drive kinematics, 360° LiDAR raycasting, real-time `/cmd_vel` keyboard teleop, and `/odom` position feedback.
-- **Pedagogical Workflow**: Progressive disclosure in course lessons (`Lesson → Practice → Result`) eliminating multi-window clutter.
-- **ROS 2 Developer Playground**: Dedicated sandbox (`/playground/ros2`) with a code editor, interactive terminal, and autonomous 2D mobile robot lab.
-- **Progress Tracking**: Local storage persistence for lesson completion, quizzes, exercises, font sizing, and language preference.
+## ความสามารถหลัก
 
----
+- **บทเรียนสองภาษา ไทย/อังกฤษ** ครอบคลุม Navigation, เนื้อหา, Quiz และห้องทดลอง
+- **หลักสูตร Linux และ Ubuntu 24.04** ตั้งแต่คำสั่งพื้นฐานจนถึงการจัดการไฟล์และระบบ
+- **หลักสูตร ROS 2 Jazzy** จัดตามหัวข้อจากเอกสาร ROS 2 Jazzy Tutorials โดยไม่รวมหมวด Demos และ Miscellaneous
+- **บทติดตั้ง ROS 2 Jazzy** อ้างอิงขั้นตอนปัจจุบันสำหรับ Ubuntu 24.04 และแพ็กเกจ `ros2-apt-source`
+- **Terminal แบบโต้ตอบ** รองรับคำสั่ง Linux, command history และ Tab completion
+- **ฝึกเขียน ROS 2 ด้วย Python และ C++** พร้อมตรวจโครงสร้าง Publisher/Subscriber และแสดงผลการรัน
+- **สนามทดลอง ROS 2 สำหรับนักพัฒนา** รวม Code Editor, Terminal และหุ่นยนต์ 2 มิติไว้ในหน้าเดียว
+- **หุ่นยนต์ Differential Drive 2 มิติ** พร้อม LiDAR, `/cmd_vel`, `/odom` และการหลบสิ่งกีดขวางอัตโนมัติ
+- **ติดตามความคืบหน้า** บันทึกบทเรียนที่เรียนจบ คะแนน Quiz ภาษา และขนาดตัวอักษรใน `localStorage`
+- **Responsive UI** ใช้งานได้ทั้ง Desktop, Tablet และ Mobile
 
-## 🛠 Technology Stack
+## เทคโนโลยีที่ใช้
 
-| Layer | Technology |
-| :--- | :--- |
-| **Framework** | Next.js 15 (App Router, React Server Components & Static Site Generation) |
-| **UI Library** | React 19, Lucide React icons, Canvas Confetti |
-| **Styling** | Tailwind CSS v3, PostCSS, Custom typography system |
-| **Animations** | Framer Motion |
-| **State Management** | Zustand (with localStorage persistence) |
-| **Language** | TypeScript 5.7+ |
-| **Testing** | Jiti + Custom VFS & Tab Completion Test Suite |
+| ส่วน | เทคโนโลยี |
+| --- | --- |
+| Framework | Next.js 15 App Router |
+| UI | React 19, Lucide React, Canvas Confetti |
+| ภาษา | TypeScript 5.7+ |
+| Styling | Tailwind CSS 3, PostCSS |
+| Animation | Framer Motion |
+| State Management | Zustand พร้อม `localStorage` persistence |
+| Testing | Jiti และชุดทดสอบ Terminal/ROS 2 |
+| CI | GitHub Actions บน Node.js 22 |
 
----
+## ความต้องการของระบบ
 
-## 📋 System Requirements
+- Node.js `20.9.0` ขึ้นไป แนะนำ Node.js 22 LTS ตาม `.nvmrc`
+- npm 10 ขึ้นไป
+- Git 2.30 ขึ้นไป
+- macOS, Windows PowerShell/WSL2 หรือ Linux
 
-- **Node.js**: `v20.9.0` or `v22.x LTS` (Recommended: Node 22 via `.nvmrc`)
-- **Package Manager**: `npm` (v10+ or v11+)
-- **Operating System**: macOS, Windows (PowerShell or WSL2), or Linux (Ubuntu 22.04 / 24.04)
+ตรวจสอบเวอร์ชันด้วย:
 
----
+```bash
+git --version
+node --version
+npm --version
+```
 
-## 💻 Installation & Setup
+## การติดตั้งบนเครื่องใหม่
 
-### Clone Repository
 ```bash
 git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
 cd Redbrick_Robotics_Academy
-```
-
-### Install Dependencies
-```bash
+nvm install
+nvm use
 npm ci
 ```
 
-### Environment Configuration (Optional)
+ใช้ `npm ci` เมื่อติดตั้งโปรเจกต์บนเครื่องใหม่หรือระบบ CI เพื่อให้ dependency ตรงกับ `package-lock.json`
+
+### Environment variables
+
+โปรเจกต์สามารถเปิดใช้งานได้โดยไม่ต้องสร้าง `.env.local` หากต้องการกำหนดค่าเฉพาะเครื่อง:
+
+macOS, Linux และ WSL2:
+
 ```bash
 cp .env.example .env.local
 ```
 
-### Run Development Server
-```bash
-npm run dev
+Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env.local
 ```
 
-Visit [http://localhost:3000](http://localhost:3000).
+ค่าตัวอย่างอยู่ใน `.env.example`:
 
----
+```dotenv
+NEXT_PUBLIC_APP_NAME="Redbrick Robotics Academy"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+PORT=3000
+```
 
-## 🚀 Available Scripts
+อย่า commit `.env.local`, token, secret หรือรหัสผ่านขึ้น Git
+
+## คำสั่งสำหรับพัฒนา
+
+| คำสั่ง | การทำงาน |
+| --- | --- |
+| `npm run dev` | เปิด Development Server |
+| `npm run lint` | ตรวจ ESLint ใน source code |
+| `npm run typecheck` | ตรวจ TypeScript โดยไม่สร้าง output |
+| `npm test` | รันชุดทดสอบ Terminal และ ROS 2 |
+| `npm run build` | สร้าง Production Build |
+| `npm run start` | เปิด Production Server จาก Build ล่าสุด |
+| `npm run verify` | รัน lint, typecheck, test และ build ตามลำดับ |
+
+ก่อน commit หรือ push ให้ตรวจทั้งโปรเจกต์ด้วย:
 
 ```bash
-# Start Next.js development server
-npm run dev
+npm run verify
+```
 
-# Run unit test suite (Virtual File System & Tab completion)
-npm run test
+## การสร้าง Production Build
 
-# Run ESLint linting
-npm run lint
-
-# Run TypeScript compiler check
-npm run typecheck
-
-# Create optimized production build
+```bash
 npm run build
-
-# Start production server locally
 npm run start
 ```
 
----
+จากนั้นเปิด <http://localhost:3000> เพื่อตรวจ Build ที่สร้างแล้ว
 
-## 📁 Project Directory Structure
+หากต้องการล้าง Build cache:
+
+macOS, Linux และ WSL2:
+
+```bash
+rm -rf .next
+npm run build
+```
+
+Windows PowerShell:
+
+```powershell
+Remove-Item -Recurse -Force .next
+npm run build
+```
+
+## โครงสร้างโปรเจกต์
 
 ```text
 Redbrick_Robotics_Academy/
 ├── .github/
-│   └── workflows/ci.yml         # Automated GitHub Actions CI
-├── .vscode/
-│   └── extensions.json          # Recommended VS Code extensions
-├── docs/                        # Complete technical & editing guides
-│   ├── SETUP_GUIDE.md           # Multi-OS setup (macOS, Windows, Linux)
-│   ├── DEVELOPMENT_GUIDE.md     # Architecture & engineering workflow
-│   ├── EDITING_GUIDE.md         # Exact file paths for editing content & UI
-│   ├── FILE_GUIDE.md            # Directory index with risk classifications
-│   ├── GIT_WORKFLOW.md          # Multi-machine Git collaboration guide
-│   ├── HOW_TO_ADD_LESSON.md     # Step-by-step guide to adding lessons
-│   ├── HOW_TO_ADD_COURSE.md     # Step-by-step guide to adding courses
-│   ├── HOW_TO_EDIT_ROS_LAB.md   # How to tune the ROS 2 simulator & robot
-│   ├── DO_NOT_EDIT.md           # Files and identifiers that must remain untouched
-│   └── TROUBLESHOOTING.md       # Common issues and solutions
-├── public/                      # Static assets (logos, icons, favicon)
-│   └── images/
-│       ├── redbrick_logo.png
-│       └── redbrick-logo-transparent.png
-├── scripts/                     # Content generation and test runners
-│   └── test-completion.mjs      # 53-point Tab completion test suite
+│   └── workflows/ci.yml             # GitHub Actions
+├── docs/                            # คู่มือพัฒนาและแก้ไขโปรเจกต์
+│   ├── BUILD_AND_TRANSFER_GUIDE_TH.md
+│   ├── SETUP_GUIDE.md
+│   ├── DEVELOPMENT_GUIDE.md
+│   ├── EDITING_GUIDE.md
+│   ├── GIT_WORKFLOW.md
+│   └── TROUBLESHOOTING.md
+├── public/                          # รูปภาพและ static assets
+├── scripts/
+│   ├── test-completion.mjs          # ทดสอบ Terminal completion
+│   └── test-ros-simulator.mjs       # ทดสอบหลักสูตรและ ROS 2 Lab
 ├── src/
-│   ├── app/                     # Next.js App Router pages
-│   │   ├── layout.tsx           # Global Root Layout
-│   │   ├── page.tsx             # Academy Homepage
-│   │   ├── courses/             # Course routes (/courses/linux, /courses/ros2-jazzy)
-│   │   ├── cheatsheet/          # Interactive CLI Cheatsheets
-│   │   └── playground/          # Developer Sandbox (/playground/ros2)
-│   ├── components/              # React Components
-│   │   ├── common/              # Common UI (Navbar, Footer, MarkdownRenderer, etc.)
-│   │   ├── course/              # Course Layout, Sidebar, Header, Quizzes
-│   │   └── simulator/           # Terminal, VFS, ROSGraph, RobotSimulator
-│   ├── content/                 # Course Curriculum & Lesson Data
-│   │   ├── en/                  # English content modules
-│   │   ├── th/                  # Thai content modules
-│   │   ├── linuxData.ts         # Linux course metadata & lessons
-│   │   └── ros2Data.ts          # ROS 2 Jazzy course metadata & lessons
-│   ├── lib/                     # Utilities, State & Simulation Engine
-│   │   ├── i18n.ts              # Internationalization loader
-│   │   ├── simulator/           # Virtual File System, ROS simulator, tab engine
-│   │   └── store/               # Zustand progress store
-│   ├── locales/                 # UI string translations (en.json, th.json)
-│   └── types/                   # TypeScript interfaces and type definitions
-├── .editorconfig                # Universal editor formatting
-├── .env.example                 # Environment configuration template
-├── .gitignore                   # Git ignore specifications
-├── .nvmrc                       # Node version target (22)
-├── package.json                 # Project dependencies & scripts
-├── package-lock.json            # Deterministic dependency lockfile
-├── tailwind.config.js           # Theme colors, fonts, and breakpoints
-└── tsconfig.json                # TypeScript compiler configuration
+│   ├── app/                         # Next.js routes และ pages
+│   ├── components/
+│   │   ├── common/                  # Navbar, Footer, Search, Markdown
+│   │   ├── course/                  # Layout, Sidebar, Quiz, Exercise
+│   │   └── simulator/               # Terminal และ ROS 2 Labs
+│   ├── content/
+│   │   ├── th/                      # เนื้อหาภาษาไทย
+│   │   └── en/                      # เนื้อหาภาษาอังกฤษ
+│   ├── lib/                         # Store และ logic ของห้องทดลอง
+│   ├── locales/                     # ข้อความ UI ไทย/อังกฤษ
+│   └── types/                       # TypeScript types
+├── .env.example
+├── .nvmrc                          # Node.js 22
+├── package.json
+├── package-lock.json
+├── tailwind.config.js
+└── tsconfig.json
 ```
 
----
+## ตำแหน่งไฟล์ที่แก้บ่อย
 
-## 🔍 Editing Quick Reference
+| ต้องการแก้ | ไฟล์ |
+| --- | --- |
+| หน้าแรก | `src/app/page.tsx` |
+| Navbar | `src/components/common/Navbar.tsx` |
+| Footer | `src/components/common/Footer.tsx` |
+| Layout หน้าบทเรียน | `src/components/course/LessonPageLayout.tsx` |
+| เนื้อหา Linux ภาษาไทย | `src/content/th/linuxData.ts` |
+| เนื้อหา Linux ภาษาอังกฤษ | `src/content/en/linuxData.ts` |
+| เนื้อหา ROS 2 ภาษาไทย | `src/content/th/ros2Data.ts` |
+| เนื้อหา ROS 2 ภาษาอังกฤษ | `src/content/en/ros2Data.ts` |
+| ข้อความ UI | `src/locales/th.json`, `src/locales/en.json` |
+| Terminal | `src/components/simulator/TerminalSimulator.tsx` |
+| บทติดตั้ง ROS 2 | `src/components/simulator/ROS2InstallationLab.tsx` |
+| ห้องทดลองตามบทเรียน | `src/components/simulator/LessonInteractiveLab.tsx` |
+| สนามทดลอง ROS 2 | `src/components/simulator/ROS2InteractiveLab.tsx` |
+| หุ่นยนต์ 2 มิติ | `src/components/simulator/MobileRobotSimulator.tsx` |
+| ระบบหลบสิ่งกีดขวาง | `src/lib/simulator/obstacleAvoidance.ts` |
+| สีและ Typography | `tailwind.config.js` |
 
-Looking to make changes? Use this direct lookup:
+## การทำงานต่อบนเครื่องอื่น
 
-| What you want to edit | Primary File Path |
-| :--- | :--- |
-| **Homepage & Hero** | `src/app/page.tsx` |
-| **Navbar & Header Navigation** | `src/components/common/Navbar.tsx` |
-| **Course Sidebar Navigation** | `src/components/course/CourseSidebar.tsx` |
-| **Linux Course Content (Default)** | `src/content/linuxData.ts` |
-| **Linux Content (Thai / English)** | `src/content/th/linuxData.ts` / `src/content/en/linuxData.ts` |
-| **ROS 2 Course Content (Default)** | `src/content/ros2Data.ts` |
-| **ROS 2 Content (Thai / English)** | `src/content/th/ros2Data.ts` / `src/content/en/ros2Data.ts` |
-| **UI Translations (Thai / English)** | `src/locales/th.json` & `src/locales/en.json` |
-| **Interactive Terminal Simulator** | `src/components/simulator/TerminalSimulator.tsx` |
-| **Terminal Tab Completion Logic** | `src/lib/simulator/completion/completionEngine.ts` |
-| **Virtual File System (VFS)** | `src/lib/simulator/virtualFileSystem.ts` |
-| **ROS 2 Computational Graph** | `src/components/simulator/ROSGraph.tsx` |
-| **2D Mobile Robot Simulator** | `src/components/simulator/MobileRobotSimulator.tsx` |
-| **ROS 2 Installation Lab** | `src/components/simulator/ROS2InstallationLab.tsx` |
-| **ROS 2 Guided Lesson Lab** | `src/components/simulator/LessonInteractiveLab.tsx` |
-| **ROS 2 Developer Playground** | `src/app/playground/ros2/page.tsx` |
-| **Brand Colors & Typography** | `tailwind.config.js` |
+บนเครื่องต้นทาง:
 
-*For complete instructions, read [`docs/EDITING_GUIDE.md`](docs/EDITING_GUIDE.md).*
+```bash
+npm run verify
+git status
+git add .
+git commit -m "feat: อธิบายงานที่แก้ไข"
+git push origin main
+```
 
----
+บนเครื่องปลายทาง:
 
-## 💻 New Computer Onboarding Checklist
+```bash
+cd Redbrick_Robotics_Academy
+git switch main
+git pull --ff-only origin main
+nvm use
+npm ci
+npm run verify
+npm run dev
+```
 
-Setting up on a new machine? Check off each step:
+อ่านขั้นตอนแยกตามระบบปฏิบัติการ การแก้ Build error และ Git conflict ได้ใน [คู่มือ Build และพัฒนาต่อบนเครื่องอื่น ภาษาไทย](docs/BUILD_AND_TRANSFER_GUIDE_TH.md)
 
-- [ ] **Install Git**: Check with `git --version`
-- [ ] **Install Node.js 22 LTS**: Check with `node -v` (v20+ or v22+)
-- [ ] **Clone repository**: `git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git`
-- [ ] **Enter folder**: `cd Redbrick_Robotics_Academy`
-- [ ] **Install dependencies**: `npm ci`
-- [ ] **Optional setup**: `cp .env.example .env.local`
-- [ ] **Run dev server**: `npm run dev`
-- [ ] **Verify browser**: Open `http://localhost:3000`
-- [ ] **Run verification build**: `npm run build`
+## Checklist ก่อน Push
 
-*For OS-specific details (macOS, Windows PowerShell, Ubuntu Linux), refer to [`docs/SETUP_GUIDE.md`](docs/SETUP_GUIDE.md).*
+- [ ] ไม่มี `.env.local`, secret หรือไฟล์ส่วนตัวใน `git status`
+- [ ] เนื้อหาภาษาไทยและอังกฤษมี module, lesson และ slug ตรงกัน
+- [ ] `npm run lint` ผ่าน
+- [ ] `npm run typecheck` ผ่าน
+- [ ] `npm test` ผ่าน
+- [ ] `npm run build` ผ่าน
+- [ ] ทดลองหน้าที่แก้บนขนาดหน้าจอที่เกี่ยวข้อง
+- [ ] Commit message อธิบายสิ่งที่เปลี่ยนชัดเจน
 
----
+## คู่มือเพิ่มเติม
 
-## 🔀 Git Collaboration Workflow
-
-When working across multiple computers or team members:
-
-1. **Always pull before starting work**:
-   ```bash
-   git pull origin main
-   ```
-2. **Create a topic branch**:
-   ```bash
-   git checkout -b feature/topic-name
-   ```
-3. **Commit with clean conventional messages**:
-   ```bash
-   git add .
-   git commit -m "feat: add ROS 2 parameter tuning lesson"
-   ```
-4. **Push and create Pull Request**:
-   ```bash
-   git push -u origin feature/topic-name
-   ```
-
-*Read [`docs/GIT_WORKFLOW.md`](docs/GIT_WORKFLOW.md) for branch rules and conflict resolution.*
-
----
-
-## 📖 Complete Documentation Index
-
-All extended guides are available in the [`docs/`](docs/) directory:
-
-- 📘 [Setup Guide (macOS / Windows / Linux)](docs/SETUP_GUIDE.md)
 - 🇹🇭 [คู่มือ Build และพัฒนาต่อบนเครื่องอื่น ฉบับละเอียด](docs/BUILD_AND_TRANSFER_GUIDE_TH.md)
-- 🏗 [Development & Architecture Guide](docs/DEVELOPMENT_GUIDE.md)
-- ✏️ [Editing & Content Reference](docs/EDITING_GUIDE.md)
-- 🗂 [File Safety Guide](docs/FILE_GUIDE.md)
-- 🌿 [Git Workflow & Collaboration](docs/GIT_WORKFLOW.md)
-- ➕ [How to Add a Lesson](docs/HOW_TO_ADD_LESSON.md)
-- 📚 [How to Add a Course](docs/HOW_TO_ADD_COURSE.md)
-- 🔬 [How to Edit ROS 2 Interactive Labs](docs/HOW_TO_EDIT_ROS_LAB.md)
-- ⛔ [Do Not Edit Guide](docs/DO_NOT_EDIT.md)
-- 🛠 [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
+- 📘 [คู่มือติดตั้ง macOS, Windows และ Linux](docs/SETUP_GUIDE.md)
+- 🏗 [โครงสร้างและแนวทางพัฒนา](docs/DEVELOPMENT_GUIDE.md)
+- ✏️ [คู่มือแก้ไขเนื้อหาและ UI](docs/EDITING_GUIDE.md)
+- 🗂 [คู่มือโครงสร้างไฟล์](docs/FILE_GUIDE.md)
+- 🌿 [แนวทางใช้ Git หลายเครื่อง](docs/GIT_WORKFLOW.md)
+- ➕ [วิธีเพิ่มบทเรียน](docs/HOW_TO_ADD_LESSON.md)
+- 📚 [วิธีเพิ่มหลักสูตร](docs/HOW_TO_ADD_COURSE.md)
+- 🔬 [วิธีแก้ไข ROS 2 Lab](docs/HOW_TO_EDIT_ROS_LAB.md)
+- ⛔ [ไฟล์และส่วนที่ต้องระวัง](docs/DO_NOT_EDIT.md)
+- 🛠 [แนวทางแก้ปัญหา](docs/TROUBLESHOOTING.md)
 
----
+## GitHub Actions
 
-## 📄 License
+ทุกครั้งที่ push หรือเปิด Pull Request เข้า `main` ระบบ CI จะรันบน Node.js 22 ตามลำดับ:
 
-Proprietary © 2026 **Redbrick Robotics Co., Ltd.** All rights reserved.  
-Unauthorized distribution, copying, or modification without written permission is prohibited.
+```text
+npm ci
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+ควรรัน `npm run verify` ในเครื่องก่อน push เพื่อให้ผลใกล้เคียงกับ CI
+
+## ลิขสิทธิ์
+
+สงวนลิขสิทธิ์ © 2026 **Redbrick Robotics Co., Ltd.** ห้ามเผยแพร่ คัดลอก หรือดัดแปลงโดยไม่ได้รับอนุญาตเป็นลายลักษณ์อักษร
