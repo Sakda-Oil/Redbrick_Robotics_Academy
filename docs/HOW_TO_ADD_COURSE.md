@@ -130,7 +130,7 @@ export default function Nav2CoursePage() {
      "nav2Course": "Nav2 Navigation"
    }
    ```
-2. In `src/components/layout/Navbar.tsx`, add the course link to the dropdown navigation menu.
+2. In `src/components/common/Navbar.tsx`, add the course link to the navigation menu.
 
 ---
 

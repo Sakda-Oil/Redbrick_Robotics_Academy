@@ -39,7 +39,9 @@ interface LessonPageLayoutProps {
 
 export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [terminalQuickCommand, setTerminalQuickCommand] = useState<string | undefined>(undefined);
+  const [terminalRunSignal, setTerminalRunSignal] = useState<
+    { command: string; timestamp: number } | undefined
+  >();
   const [simTab, setSimTab] = useState<"robot" | "graph">("robot");
   const mainRef = useRef<HTMLElement>(null);
 
@@ -51,6 +53,12 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
   const activeLesson = (course.id === "linux"
     ? getLinuxLesson(lesson.slug, locale)
     : getROS2Lesson(lesson.slug, locale)) || lesson;
+  const activeModule = activeCourse.modules.find((module) =>
+    module.lessons.some((item) => item.id === activeLesson.id)
+  );
+  const displayLesson = activeModule
+    ? { ...activeLesson, moduleNumber: activeModule.number, moduleTitle: activeModule.title }
+    : activeLesson;
 
   // Scroll restoration: Scroll to top on lesson change, or preserve anchor link if target hash is present
   useEffect(() => {
@@ -71,8 +79,14 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
   }, [activeLesson.slug, activeCourse.id]);
 
   const handleTryCode = (cmd: string) => {
-    setTerminalQuickCommand(cmd);
+    setTerminalRunSignal({ command: cmd, timestamp: Date.now() });
   };
+
+  const supportsInlineRun =
+    activeLesson.courseId === "linux" ||
+    !["01-introduction", "02-installation", "11-gazebo-harmonic"].includes(activeLesson.slug);
+  const isGuidedROS2Installation =
+    activeLesson.courseId === "ros2-jazzy" && activeLesson.slug === "02-installation";
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] bg-white dark:bg-charcoal-900 transition-colors">
@@ -91,7 +105,7 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
       >
         <div className="w-full max-w-[1400px]">
           {/* Header with Breadcrumb, Title, FontSizeControl & Completed button */}
-          <LessonHeader lesson={activeLesson} />
+          <LessonHeader lesson={displayLesson} />
 
           {/* Teacher Mode Alert (if enabled) */}
           <TeacherModeBanner lesson={activeLesson} />
@@ -99,18 +113,20 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
           {/* Learning Objectives */}
           <LearningObjectives objectives={activeLesson.learningObjectives} />
 
-          {/* Section: Concept */}
-          <section id="concept" className="mb-12">
-            <h2 className="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-charcoal-900 dark:text-white mb-5 border-b border-gray-100 dark:border-charcoal-800 pb-3 font-heading">
-              {t.course.concept}
-            </h2>
-            <div className="font-sans">
-              <MarkdownRenderer content={activeLesson.concept} fontSize={fontSize} />
-            </div>
-          </section>
+          {/* The guided installation lab already contains the official commands. */}
+          {!isGuidedROS2Installation && (
+            <section id="concept" className="mb-12">
+              <h2 className="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-charcoal-900 dark:text-white mb-5 border-b border-gray-100 dark:border-charcoal-800 pb-3 font-heading">
+                {t.course.concept}
+              </h2>
+              <div className="font-sans">
+                <MarkdownRenderer content={activeLesson.concept} fontSize={fontSize} />
+              </div>
+            </section>
+          )}
 
           {/* Section: Syntax & Explanations */}
-          {activeLesson.syntax && (
+          {activeLesson.syntax && !isGuidedROS2Installation && (
             <section id="syntax" className="mb-12">
               <h2 className="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-charcoal-900 dark:text-white mb-4 border-b border-gray-100 dark:border-charcoal-800 pb-3 font-heading">
                 {t.course.syntax}
@@ -127,7 +143,7 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
           )}
 
           {/* Section: Interactive Examples & Try It Yourself */}
-          <section id="examples" className="mb-12">
+          {!isGuidedROS2Installation && <section id="examples" className="mb-12">
             <h2 className="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-charcoal-900 dark:text-white mb-3 border-b border-gray-100 dark:border-charcoal-800 pb-3 font-heading">
               {t.course.examples}
             </h2>
@@ -151,12 +167,12 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
                   code={ex.code}
                   language={ex.language}
                   output={ex.output}
-                  allowTry={ex.language === "bash"}
+                  allowTry={ex.language === "bash" && supportsInlineRun}
                   onTryCommand={handleTryCode}
                 />
               </div>
             ))}
-          </section>
+          </section>}
 
           {/* Section: Live Terminal Simulator (Linux only) */}
           {activeLesson.courseId !== "ros2-jazzy" && (
@@ -174,8 +190,7 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
               </p>
 
               <TerminalSimulator
-                key={terminalQuickCommand}
-                initialCommand={terminalQuickCommand}
+                runTrigger={terminalRunSignal}
                 title={`Redbrick Terminal Simulator — ${activeLesson.title}`}
                 heightClass="h-96 sm:h-[420px] lg:h-[480px]"
               />
@@ -185,7 +200,7 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
           {/* Section: Context-Aware ROS 2 Interactive Lab (Progressive Tabbed Flow) */}
           {activeLesson.courseId === "ros2-jazzy" && (
             <section id="simulation" className="mb-12">
-              <LessonInteractiveLab lesson={activeLesson} />
+              <LessonInteractiveLab lesson={activeLesson} externalRunTrigger={terminalRunSignal} />
             </section>
           )}
 
@@ -235,7 +250,7 @@ export function LessonPageLayout({ course, lesson }: LessonPageLayoutProps) {
           )}
 
           {/* Section: Command Exercise */}
-          {activeLesson.exercise && (
+          {activeLesson.exercise && !isGuidedROS2Installation && (
             <section id="exercise" className="mb-12">
               <h2 className="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-charcoal-900 dark:text-white mb-2 border-b border-gray-100 dark:border-charcoal-800 pb-3 font-heading">
                 {t.course.exercise}

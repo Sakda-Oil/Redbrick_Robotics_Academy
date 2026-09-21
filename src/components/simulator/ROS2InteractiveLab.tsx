@@ -2,12 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { TerminalSimulator } from "./TerminalSimulator";
-import { ROSGraph } from "./ROSGraph";
 import { MobileRobotSimulator } from "./MobileRobotSimulator";
 import {
   Code,
-  Terminal as TerminalIcon,
-  Network,
   Bot,
   Play,
   Save,
@@ -372,8 +369,8 @@ export function ROS2InteractiveLab() {
   const [code, setCode] = useState("");
   const [activeFile, setActiveFile] = useState("/home/redbrick/ros2_ws/src/my_package/my_package/minimal_publisher.py");
 
-  const [runSignal, setRunSignal] = useState<{ command: string; timestamp: number } | undefined>(undefined);
-  const [graphMode, setGraphMode] = useState<"default" | "minimal_publisher" | "minimal_subscriber" | "robot_controller">("minimal_publisher");
+  const [runSignal, setRunSignal] = useState<{ command: string; timestamp: number; sourceCode?: string } | undefined>(undefined);
+  const [activePanel, setActivePanel] = useState<"workspace" | "robot">("workspace");
   const [externalCmdVel, setExternalCmdVel] = useState<{ linear: number; angular: number; timestamp: number } | undefined>(undefined);
   const [updateTick, setUpdateTick] = useState(0);
 
@@ -455,19 +452,13 @@ export function ROS2InteractiveLab() {
       ? `python3 ${activeFile.replace("/home/redbrick/ros2_ws/", "")}`
       : `./${activeFile.replace("/home/redbrick/ros2_ws/", "").replace(".cpp", "")}`;
 
-    // 2. Set graph mode
-    if (activePreset === "publisher") {
-      setGraphMode("minimal_publisher");
-    } else if (activePreset === "subscriber") {
-      setGraphMode("minimal_subscriber");
-    } else if (activePreset === "robot_controller") {
-      setGraphMode("robot_controller");
-      // 3. Trigger robot movement!
+    // Running the controller publishes a simulated /cmd_vel command to the robot.
+    if (activePreset === "robot_controller") {
       setExternalCmdVel({ linear: 0.35, angular: 0.0, timestamp: Date.now() });
     }
 
-    // 4. Send to terminal
-    setRunSignal({ command: cmd, timestamp: Date.now() });
+    // Send the program to the terminal simulator.
+    setRunSignal({ command: cmd, timestamp: Date.now(), sourceCode: code });
   };
 
   // Get root node for tree
@@ -496,8 +487,8 @@ export function ROS2InteractiveLab() {
             </p>
             <p className="text-xs text-gray-500 mt-0.5">
               {locale === "th"
-                ? "ใช้สำหรับทดลองคำสั่ง ROS 2, ตรวจสอบ Node และ Topic, รันโค้ดตัวอย่าง Python/C++, และดูผลที่เกิดกับหุ่นยนต์จำลอง"
-                : "Use this lab to experiment with ROS 2 commands, inspect Nodes and Topics, run simulated Python/C++ code examples, and observe robot behavior."}
+                ? "ใช้สำหรับรันโค้ดตัวอย่าง Python/C++ ดูผลใน Terminal และทดลองหุ่นยนต์ที่ขับหลบสิ่งกีดขวางด้วย LiDAR"
+                : "Run Python/C++ examples, inspect their terminal output, and try a LiDAR-based robot that avoids obstacles autonomously."}
             </p>
           </div>
         </div>
@@ -534,18 +525,41 @@ export function ROS2InteractiveLab() {
               <span className="text-gray-500 font-bold">→</span>
               <span className="px-2 py-1 rounded bg-charcoal-800 text-gray-200">2. ดู Terminal Output</span>
               <span className="text-gray-500 font-bold">→</span>
-              <span className="px-2 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/40">3. ดู Graph</span>
-              <span className="text-gray-500 font-bold">→</span>
-              <span className="px-2 py-1 rounded bg-green-950/60 text-green-300 border border-green-800/40">4. ดู Robot ทำงาน</span>
+              <span className="px-2 py-1 rounded bg-green-950/60 text-green-300 border border-green-800/40">3. ดู Robot ทำงานและหลบสิ่งกีดขวาง</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Top row: Code Editor and Terminal */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Workspace Code Editor (7 Cols on Desktop) */}
-        <div className="lg:col-span-7 flex flex-col rounded-2xl overflow-hidden border border-charcoal-800 bg-charcoal-950 shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 rounded-2xl border border-charcoal-800 bg-charcoal-950 p-2 shadow-lg">
+        {[
+          { id: "workspace" as const, icon: Code, th: "เขียนและรันโค้ด", en: "Code & Terminal" },
+          { id: "robot" as const, icon: Bot, th: "หุ่นยนต์หลบสิ่งกีดขวาง", en: "Autonomous Robot" },
+        ].map((panel) => {
+          const Icon = panel.icon;
+          const selected = activePanel === panel.id;
+          return (
+            <button
+              key={panel.id}
+              onClick={() => setActivePanel(panel.id)}
+              className={`flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition-colors ${
+                selected
+                  ? "bg-redbrick-600 text-white shadow-md"
+                  : "text-gray-400 hover:bg-charcoal-900 hover:text-white"
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              <span>{locale === "th" ? panel.th : panel.en}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Workspace: editor and terminal share the screen only on wide displays. */}
+      {activePanel === "workspace" && (
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
+        {/* Workspace Code Editor */}
+        <div className="xl:col-span-6 flex flex-col rounded-2xl overflow-hidden border border-charcoal-800 bg-charcoal-950 shadow-lg">
           {/* Editor Header */}
           <div className="flex flex-wrap items-center justify-between px-4 py-2.5 bg-charcoal-900 border-b border-charcoal-800 gap-2">
             <div className="flex items-center gap-2 text-gray-200">
@@ -608,7 +622,7 @@ export function ROS2InteractiveLab() {
 
               <button
                 onClick={handleRun}
-                title="Simulate Execution in Terminal and ROS Graph"
+                title="Run this program in the simulated terminal"
                 className="flex items-center gap-1 text-xs px-3 py-1 rounded-lg bg-green-600 hover:bg-green-500 text-white font-bold transition-all shadow-md active:scale-95"
               >
                 <Play className="h-3.5 w-3.5 fill-current" />
@@ -618,7 +632,7 @@ export function ROS2InteractiveLab() {
           </div>
 
           {/* Editor Body: File Explorer + Text Area */}
-          <div className="flex h-[320px]">
+          <div className="flex h-[520px]">
             {/* File Tree */}
             <div className="w-44 shrink-0 bg-charcoal-900/60 border-r border-charcoal-800 overflow-y-auto py-2">
               <div className="px-3 pb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-gray-500">
@@ -651,44 +665,21 @@ export function ROS2InteractiveLab() {
           </div>
         </div>
 
-        {/* Terminal (5 Cols on Desktop) */}
-        <div className="lg:col-span-5 flex flex-col rounded-2xl overflow-hidden border border-charcoal-800 bg-charcoal-950 shadow-lg">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-charcoal-900 border-b border-charcoal-800">
-            <div className="flex items-center gap-2 text-gray-200">
-              <TerminalIcon className="h-4 w-4 text-green-400" />
-              <span className="font-bold text-xs sm:text-sm font-heading">Simulated Terminal</span>
-            </div>
-            <span className="text-[10px] font-mono text-gray-500">redbrick@ubuntu:~/ros2_ws$</span>
-          </div>
+        {/* Terminal */}
+        <div className="xl:col-span-6 flex flex-col rounded-2xl overflow-hidden bg-charcoal-950 shadow-lg">
           <TerminalSimulator
             fileSystem={fs}
             rosSimulator={ros}
-            heightClass="h-[320px]"
+            heightClass="h-[520px]"
+            flush
             runTrigger={runSignal}
             onExecute={() => setUpdateTick((prev) => prev + 1)}
           />
         </div>
       </div>
+      )}
 
-      {/* Bottom row: ROS Graph and Robot Simulator */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* ROS Graph */}
-        <div className="flex flex-col rounded-2xl overflow-hidden border border-charcoal-800 bg-charcoal-950 shadow-lg">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-charcoal-900 border-b border-charcoal-800 text-gray-200">
-            <div className="flex items-center gap-2">
-              <Network className="h-4 w-4 text-cyan-400" />
-              <span className="font-bold text-xs sm:text-sm font-heading">ROS 2 Computational Graph</span>
-            </div>
-            <span className="text-[10px] font-mono text-cyan-400 font-semibold uppercase">
-              Mode: {graphMode}
-            </span>
-          </div>
-          <div className="h-[440px] overflow-hidden relative">
-            <ROSGraph graphMode={graphMode} />
-          </div>
-        </div>
-
-        {/* Robot Simulator */}
+      {activePanel === "robot" && (
         <div className="flex flex-col rounded-2xl overflow-hidden border border-charcoal-800 bg-charcoal-950 shadow-lg">
           <div className="flex items-center justify-between px-4 py-2.5 bg-charcoal-900 border-b border-charcoal-800 text-gray-200">
             <div className="flex items-center gap-2">
@@ -696,14 +687,14 @@ export function ROS2InteractiveLab() {
               <span className="font-bold text-xs sm:text-sm font-heading">Mobile Robot Simulator</span>
             </div>
             <span className="text-[10px] font-mono text-green-400 font-semibold">
-              ● Teleop & /cmd_vel Active
+              ● LiDAR Auto Avoidance Ready
             </span>
           </div>
-          <div className="h-[440px] overflow-y-auto relative flex flex-col">
-            <MobileRobotSimulator externalCmdVel={externalCmdVel} />
+          <div className="max-h-[75vh] overflow-auto overscroll-contain relative flex flex-col">
+            <MobileRobotSimulator externalCmdVel={externalCmdVel} initialMode="avoidance" />
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

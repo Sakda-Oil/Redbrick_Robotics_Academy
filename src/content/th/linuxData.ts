@@ -10,8 +10,8 @@ export const LINUX_COURSE_TH: CourseData = {
   badge: "รองรับ Ubuntu 24.04 LTS",
   iconName: "Terminal",
   accentColor: "#B5230E",
-  totalModules: 10,
-  totalLessons: 23,
+  totalModules: 5,
+  totalLessons: 10,
   estimatedHours: 12,
   modules: [
     {

@@ -17,7 +17,7 @@ export default function ROS2PlaygroundPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-charcoal-950 py-6 sm:py-8 font-sans">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 dark:border-charcoal-800 pb-4">
           <div>

@@ -21,6 +21,7 @@ import {
   ArrowRight,
   Square,
 } from "lucide-react";
+import { computeAvoidanceCommand } from "@/lib/simulator/obstacleAvoidance";
 
 export interface MobileRobotSimulatorProps {
   onCmdVelPublish?: (linear: number, angular: number) => void;
@@ -334,34 +335,9 @@ export function MobileRobotSimulator({
 
       // 1. Autonomous Behavior Logic
       if (driveMode === "avoidance") {
-        // LiDAR reactive obstacle avoidance
-        // Check front arc (-45 deg to +45 deg)
-        let frontObstacleDist = 5.0;
-        let leftObstacleDist = 5.0;
-        let rightObstacleDist = 5.0;
-
-        for (const hit of robot.lidarHits) {
-          const relAngle = (hit.angle - robot.theta + Math.PI * 3) % (Math.PI * 2) - Math.PI;
-          if (Math.abs(relAngle) < Math.PI / 4) {
-            if (hit.distance < frontObstacleDist) frontObstacleDist = hit.distance;
-          }
-          if (relAngle > 0 && relAngle < Math.PI / 2) {
-            if (hit.distance < leftObstacleDist) leftObstacleDist = hit.distance;
-          }
-          if (relAngle < 0 && relAngle > -Math.PI / 2) {
-            if (hit.distance < rightObstacleDist) rightObstacleDist = hit.distance;
-          }
-        }
-
-        if (frontObstacleDist < 0.65) {
-          // Obstacle ahead! Back up or turn away
-          robot.targetV = 0.05;
-          robot.targetOmega = leftObstacleDist > rightObstacleDist ? 1.4 : -1.4;
-        } else {
-          // Path clear, advance smoothly
-          robot.targetV = speedSetting;
-          robot.targetOmega = 0.0;
-        }
+        const command = computeAvoidanceCommand(robot.lidarHits, robot.theta, speedSetting);
+        robot.targetV = command.linear;
+        robot.targetOmega = command.angular;
       } else if (driveMode === "patrol") {
         // Square Patrol: Move forward 2.0s, turn 90 deg (1.57s @ 1.0 rad/s)
         robot.patrolTimer += dt;
@@ -708,6 +684,38 @@ export function MobileRobotSimulator({
           <div className="flex bg-charcoal-950 p-0.5 rounded-lg border border-charcoal-800 text-xs font-mono">
             <button
               type="button"
+              onClick={() => {
+                setDriveMode("avoidance");
+                setIsRunning(true);
+              }}
+              aria-pressed={driveMode === "avoidance"}
+              className={`px-3 py-1.5 rounded-md transition-colors ${
+                driveMode === "avoidance"
+                  ? "bg-green-600 text-white font-bold"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              Auto Avoid
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setDriveMode("manual");
+                setTargetVelocity(0, 0);
+              }}
+              aria-pressed={driveMode === "manual"}
+              className={`px-3 py-1.5 rounded-md transition-colors ${
+                driveMode === "manual"
+                  ? "bg-redbrick-600 text-white font-bold"
+                  : "text-gray-400 hover:text-white"
+              }`}
+            >
+              Manual
+            </button>
+          </div>
+          <div className="flex bg-charcoal-950 p-0.5 rounded-lg border border-charcoal-800 text-xs font-mono">
+            <button
+              type="button"
               onClick={() => setCurrentViewMode("student")}
               className={`px-2.5 py-1 rounded-md transition-colors ${
                 currentViewMode === "student"
@@ -803,9 +811,16 @@ export function MobileRobotSimulator({
                 <Sliders className="h-3.5 w-3.5 text-redbrick-400" /> Teleop Drive Controls
               </span>
               <span className="text-[11px] text-gray-500 font-mono">
-                {driveMode === "manual" ? "Manual Mode" : "Auto Override"}
+                {driveMode === "manual" ? "Manual Mode" : "Auto Avoiding with /scan"}
               </span>
             </div>
+
+            {driveMode === "avoidance" && (
+              <div className="mb-4 flex items-start gap-2 rounded-xl border border-green-700/40 bg-green-950/30 p-3 text-xs leading-relaxed text-green-200">
+                <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
+                <span>หุ่นยนต์กำลังขับเอง ใช้ข้อมูล <strong>/scan</strong> ชะลอ เลี้ยว หรือถอยเมื่อพบสิ่งกีดขวาง กดปุ่มทิศทางเพื่อเปลี่ยนเป็น Manual</span>
+              </div>
+            )}
 
             {/* D-Pad Buttons */}
             <div className="flex flex-col items-center gap-2">

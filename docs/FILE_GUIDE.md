@@ -31,7 +31,7 @@ Modifications here affect UI behavior, rendering, or simulator presentation. Tes
 | File / Directory | Purpose | Safe to Edit? | Risk Level | Used By |
 | :--- | :--- | :--- | :--- | :--- |
 | `src/app/page.tsx` | Academy Homepage layout & cards | ⚠️ Caution | Medium | Root route `/` |
-| `src/components/layout/Navbar.tsx` | Main top navigation bar & language switcher | ⚠️ Caution | Medium | Global app layout |
+| `src/components/common/Navbar.tsx` | Main top navigation bar & language switcher | ⚠️ Caution | Medium | Global app layout |
 | `src/components/course/CourseSidebar.tsx` | Collapsible module sidebar navigation | ⚠️ Caution | Medium | Course lesson views |
 | `src/components/course/QuizEngine.tsx` | Multiple-choice quiz interactive evaluator | ⚠️ Caution | Medium | Lesson assessment cards |
 | `src/components/course/ExerciseBox.tsx` | CLI exercise validation prompt | ⚠️ Caution | Medium | Lesson practice cards |

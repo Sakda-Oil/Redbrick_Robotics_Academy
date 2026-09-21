@@ -380,6 +380,7 @@ int main(int argc, char ** argv)
 
 interface LessonInteractiveLabProps {
   lesson: LessonContent;
+  externalRunTrigger?: { command: string; timestamp: number };
 }
 
 type LessonLabType =
@@ -391,7 +392,7 @@ type LessonLabType =
   | "launch" // ros2-10: Terminal + optional Graph tab
   | "robot"; // ros2-11: Mobile Robot Simulator + Teleop
 
-export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
+export function LessonInteractiveLab({ lesson, externalRunTrigger }: LessonInteractiveLabProps) {
   const { locale } = useProgressStore();
   const [fs] = useState(() => new VirtualFileSystem());
   const [ros] = useState(() => new ROS2Simulator());
@@ -430,10 +431,16 @@ export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
   const preset = LESSON_CODE_PRESETS[presetKey];
   const [activeLanguage, setActiveLanguage] = useState<"python" | "cpp">("python");
   const [code, setCode] = useState<string>(preset[activeLanguage]);
-  const [runSignal, setRunSignal] = useState<{ command: string; timestamp: number } | undefined>();
+  const [runSignal, setRunSignal] = useState<{ command: string; timestamp: number; sourceCode?: string } | undefined>();
   const [graphMode, setGraphMode] = useState<"default" | "minimal_publisher" | "minimal_subscriber" | "robot_controller">(
     preset.graphMode
   );
+
+  useEffect(() => {
+    if (!externalRunTrigger) return;
+    setRunSignal(externalRunTrigger);
+    setActiveTab(labType === "coding" ? "practice" : "terminal");
+  }, [externalRunTrigger, labType]);
 
   // Sync code when language or lesson changes
   useEffect(() => {
@@ -450,7 +457,7 @@ export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
         ? `python3 ~/ros2_ws/src/my_package/${lesson.slug.replace("-", "_")}.py`
         : `./${lesson.slug.replace("-", "_")}`;
 
-    setRunSignal({ command: cmd, timestamp: Date.now() });
+    setRunSignal({ command: cmd, timestamp: Date.now(), sourceCode: code });
   };
 
   const handleResetCode = () => {
@@ -587,7 +594,7 @@ export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
                 {locale === "th" ? "← กลับไปที่หุ่นยนต์" : "← Back to Robot"}
               </button>
             </div>
-            <div className="h-[440px] overflow-hidden">
+            <div className="max-h-[75vh] overflow-auto overscroll-contain">
               <ROSGraph graphMode="robot_controller" />
             </div>
           </div>
@@ -694,6 +701,7 @@ export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
             <TerminalSimulator
               fileSystem={fs}
               rosSimulator={ros}
+              runTrigger={runSignal}
               quickCommands={quickCmds}
               title={`ROS 2 Jazzy CLI Simulator — ${lesson.title}`}
               heightClass="h-[420px]"
@@ -716,7 +724,7 @@ export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
                 {locale === "th" ? "← กลับไปที่ Terminal" : "← Back to Terminal"}
               </button>
             </div>
-            <div className="h-[460px] overflow-hidden">
+            <div className="max-h-[75vh] overflow-auto overscroll-contain">
               <ROSGraph graphMode="default" />
             </div>
           </div>
@@ -894,7 +902,7 @@ export function LessonInteractiveLab({ lesson }: LessonInteractiveLabProps) {
               {locale === "th" ? "← กลับไปที่ Code & Terminal" : "← Back to Code & Terminal"}
             </button>
           </div>
-          <div className="h-[460px] overflow-hidden">
+          <div className="max-h-[75vh] overflow-auto overscroll-contain">
             <ROSGraph graphMode={graphMode} />
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { LINUX_COURSE, LINUX_LESSONS } from "@/content/linuxData";
-import { ROS2_COURSE, ROS2_LESSONS } from "@/content/ros2Data";
+import { ROS2_COURSE, ROS2_LESSONS } from "@/content";
 import { LessonPageLayout } from "@/components/course/LessonPageLayout";
 
 interface LessonPageProps {

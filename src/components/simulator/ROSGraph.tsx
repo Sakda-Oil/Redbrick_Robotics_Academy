@@ -337,7 +337,7 @@ export function ROSGraph({ activeTopicId = "cmd_vel", graphMode = "default" }: R
   // Keep entity updated when graphMode changes
   React.useEffect(() => {
     setSelectedEntity({ type: "topic", data: activeTopics[0] || TOPICS[3] });
-  }, [graphMode]);
+  }, [graphMode, activeTopics]);
 
   const [zoom, setZoom] = useState<number>(1.0);
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -403,7 +403,7 @@ export function ROSGraph({ activeTopicId = "cmd_vel", graphMode = "default" }: R
       </div>
 
       {/* SVG Canvas Area */}
-      <div className="relative p-4 sm:p-6 overflow-x-auto bg-gradient-to-b from-charcoal-950 to-charcoal-900/80 min-h-[340px] flex items-center justify-center">
+      <div className="relative p-4 sm:p-6 overflow-auto bg-gradient-to-b from-charcoal-950 to-charcoal-900/80 min-h-[340px] flex items-start justify-start sm:justify-center">
         <svg
           viewBox="0 0 740 320"
           className="w-full min-w-[700px] h-auto select-none transition-transform duration-200"

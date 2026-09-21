@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Terminal, Maximize2, Minimize2, RotateCcw, Copy, Check } from "lucide-react";
 import { VirtualFileSystem } from "@/lib/simulator/virtualFileSystem";
 import { ROS2Simulator } from "@/lib/simulator/ros2Simulator";
@@ -12,10 +12,11 @@ interface TerminalSimulatorProps {
   quickCommands?: string[];
   title?: string;
   heightClass?: string;
+  flush?: boolean;
   onExecute?: (command: string, output: string) => void;
   fileSystem?: VirtualFileSystem;
   rosSimulator?: ROS2Simulator;
-  runTrigger?: { command: string; timestamp: number };
+  runTrigger?: { command: string; timestamp: number; sourceCode?: string };
 }
 
 export function TerminalSimulator({
@@ -23,6 +24,7 @@ export function TerminalSimulator({
   quickCommands = ["pwd", "ls -l", "cd ~/ros2_ws", "ros2 node list", "ros2 topic list", "ros2 topic echo /scan"],
   title = "Redbrick Ubuntu 24.04 Terminal Simulator",
   heightClass = "h-80 sm:h-96",
+  flush = false,
   onExecute,
   fileSystem,
   rosSimulator,
@@ -51,6 +53,12 @@ export function TerminalSimulator({
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastTabRef = useRef<{ input: string; time: number } | null>(null);
+  const currentCwdRef = useRef(currentCwd);
+  const onExecuteRef = useRef(onExecute);
+
+  useEffect(() => {
+    onExecuteRef.current = onExecute;
+  }, [onExecute]);
 
   // Auto-scroll to bottom on new output
   useEffect(() => {
@@ -65,15 +73,16 @@ export function TerminalSimulator({
     return cwd;
   };
 
-  const executeCommand = (cmdStr: string) => {
+  const executeCommand = useCallback((cmdStr: string, sourceCode?: string) => {
     const trimmed = cmdStr.trim();
     if (!trimmed) return;
+    const commandCwd = currentCwdRef.current;
 
     let output = "";
     let isError = false;
 
     // Check ROS2 simulator first
-    const rosResult = ros.execute(trimmed);
+    const rosResult = sourceCode ? ros.executeProgram(trimmed, sourceCode) : ros.execute(trimmed);
     if (rosResult !== null) {
       output = rosResult.output;
       isError = rosResult.exitCode !== 0;
@@ -83,6 +92,7 @@ export function TerminalSimulator({
       output = fsResult.output;
       isError = fsResult.exitCode !== 0;
       if (fsResult.newCwd) {
+        currentCwdRef.current = fsResult.newCwd;
         setCurrentCwd(fsResult.newCwd);
       }
     }
@@ -96,7 +106,7 @@ export function TerminalSimulator({
           id: Math.random().toString(),
           command: trimmed,
           output,
-          cwd: currentCwd,
+          cwd: commandCwd,
           timestamp: Date.now(),
           isError,
         },
@@ -107,16 +117,16 @@ export function TerminalSimulator({
     setHistoryIndex(-1);
     setCurrentInput("");
 
-    if (onExecute) {
-      onExecute(trimmed, output);
+    if (onExecuteRef.current) {
+      onExecuteRef.current(trimmed, output);
     }
-  };
+  }, [fs, ros]);
 
   useEffect(() => {
     if (runTrigger && runTrigger.command) {
-      executeCommand(runTrigger.command);
+      executeCommand(runTrigger.command, runTrigger.sourceCode);
     }
-  }, [runTrigger]);
+  }, [runTrigger, executeCommand]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -258,7 +268,7 @@ export function TerminalSimulator({
 
   return (
     <div
-      className={`w-full my-8 rounded-2xl border border-charcoal-700 dark:border-charcoal-700 bg-charcoal-950 text-gray-200 overflow-hidden shadow-2xl flex flex-col font-mono transition-all ${
+      className={`w-full ${flush ? "my-0" : "my-8"} rounded-2xl border border-charcoal-700 dark:border-charcoal-700 bg-charcoal-950 text-gray-200 overflow-hidden shadow-2xl flex flex-col font-mono transition-all ${
         isExpanded ? "fixed inset-4 z-50 h-auto" : heightClass
       }`}
     >

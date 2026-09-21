@@ -129,7 +129,7 @@
   },
   "playground": {
     "title": "ROS 2 Developer Playground",
-    "subtitle": "An open sandbox environment for writing code, running commands, inspecting the ROS Graph, and teleoperating simulated robots.",
+    "subtitle": "A sandbox for writing code, running commands, and observing a LiDAR-equipped robot avoid obstacles autonomously.",
     "goToTopics": "Go to Topics Lesson",
     "graphTitle": "ROS 2 Computational Graph (Interactive rqt_graph)",
     "graphDesc": "Hover or click nodes and topics to inspect publishers, subscribers, and message schemas.",

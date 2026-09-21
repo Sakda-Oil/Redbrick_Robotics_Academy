@@ -9,32 +9,26 @@ export const ROS2_COURSE: CourseData = {
   "badge": "Ubuntu 24.04 LTS • Official Jazzy Standard",
   "iconName": "Cpu",
   "accentColor": "#B5230E",
-  "totalModules": 11,
+  "totalModules": 4,
   "totalLessons": 11,
   "estimatedHours": 18,
   "modules": [
     {
       "id": "ros2-mod-1",
       "number": 1,
-      "title": "Beginner",
-      "description": "ROS 2 Fundamentals and Installation",
+      "title": "First steps with ROS",
+      "description": "ROS 2 foundations, installation, and environment setup",
       "lessons": [
         {
           "id": "ros2-01",
           "slug": "01-introduction",
-          "title": "01. What is ROS 2 & Architecture (DDS)",
+          "title": "What is ROS 2 & Architecture (DDS)",
           "durationMinutes": 20
         },
         {
           "id": "ros2-02",
           "slug": "02-installation",
-          "title": "02. ROS 2 Jazzy Installation on Ubuntu 24.04",
-          "durationMinutes": 25
-        },
-        {
-          "id": "ros2-03",
-          "slug": "03-cli",
-          "title": "03. ROS 2 CLI & Environment Introspection",
+          "title": "ROS 2 Jazzy Installation on Ubuntu 24.04",
           "durationMinutes": 25
         }
       ]
@@ -42,25 +36,43 @@ export const ROS2_COURSE: CourseData = {
     {
       "id": "ros2-mod-2",
       "number": 2,
-      "title": "Programming",
-      "description": "Workspace, Nodes, and Launch Files",
+      "title": "Beginner: CLI tools",
+      "description": "Inspect and operate nodes, topics, services, parameters, actions, and launch files",
       "lessons": [
         {
-          "id": "ros2-04",
-          "slug": "04-workspace",
-          "title": "04. Workspaces, colcon & Overlays",
-          "durationMinutes": 20
+          "id": "ros2-03",
+          "slug": "03-cli",
+          "title": "Using ROS 2 CLI tools",
+          "durationMinutes": 25
         },
         {
-          "id": "ros2-05",
-          "slug": "05-nodes",
-          "title": "05. Writing ROS 2 Nodes in Python (rclpy)",
+          "id": "ros2-06",
+          "slug": "06-topics",
+          "title": "Understanding topics",
+          "durationMinutes": 30
+        },
+        {
+          "id": "ros2-07",
+          "slug": "07-services",
+          "title": "Understanding services",
+          "durationMinutes": 25
+        },
+        {
+          "id": "ros2-09",
+          "slug": "09-parameters",
+          "title": "Understanding parameters",
+          "durationMinutes": 25
+        },
+        {
+          "id": "ros2-08",
+          "slug": "08-actions",
+          "title": "Understanding actions",
           "durationMinutes": 30
         },
         {
           "id": "ros2-10",
           "slug": "10-launch",
-          "title": "10. ROS 2 Launch Files in Python",
+          "title": "Launching nodes",
           "durationMinutes": 30
         }
       ]
@@ -68,45 +80,33 @@ export const ROS2_COURSE: CourseData = {
     {
       "id": "ros2-mod-3",
       "number": 3,
-      "title": "Robot Fundamentals",
-      "description": "Topics, Services, Actions, Parameters",
+      "title": "Beginner: Client libraries",
+      "description": "Create workspaces and packages, then write ROS 2 nodes with rclpy and rclcpp",
       "lessons": [
         {
-          "id": "ros2-06",
-          "slug": "06-topics",
-          "title": "06. Topics, Publishers & Subscribers",
+          "id": "ros2-04",
+          "slug": "04-workspace",
+          "title": "Using colcon and creating a workspace",
+          "durationMinutes": 20
+        },
+        {
+          "id": "ros2-05",
+          "slug": "05-nodes",
+          "title": "Writing publisher and subscriber nodes",
           "durationMinutes": 30
-        },
-        {
-          "id": "ros2-07",
-          "slug": "07-services",
-          "title": "07. Services (Client/Server)",
-          "durationMinutes": 25
-        },
-        {
-          "id": "ros2-08",
-          "slug": "08-actions",
-          "title": "08. Actions (Goal/Result)",
-          "durationMinutes": 30
-        },
-        {
-          "id": "ros2-09",
-          "slug": "09-parameters",
-          "title": "09. Parameters & Dynamic Reconfiguration",
-          "durationMinutes": 25
         }
       ]
     },
     {
       "id": "ros2-mod-4",
       "number": 4,
-      "title": "Robot Applications",
-      "description": "Robot Simulation and Real-world Applications",
+      "title": "Intermediate",
+      "description": "Connect ROS 2 applications to robot simulation workflows",
       "lessons": [
         {
           "id": "ros2-11",
           "slug": "11-gazebo-harmonic",
-          "title": "11. Gazebo Harmonic Simulation (ros_gz)",
+          "title": "Using ROS 2 with Gazebo Harmonic",
           "durationMinutes": 35
         }
       ]
@@ -240,11 +240,11 @@ export const ROS2_LESSONS: Record<string, LessonContent> = {
     "durationMinutes": 25,
     "difficulty": "Beginner",
     "learningObjectives": [
-      "Add the official ROS 2 Jazzy APT repository keys on Ubuntu 24.04 (Noble Numbat).",
+      "Install ros2-apt-source to configure the official repository and signing keys on Ubuntu 24.04 (Noble Numbat).",
       "Understand the difference between 'ros-jazzy-desktop' and 'ros-jazzy-ros-base'.",
       "Configure environment sourcing in '~/.bashrc' for automatic shell initialization."
     ],
-    "concept": "ROS 2 Jazzy Jalisco is the official Long-Term Support (LTS) release paired with **Ubuntu 24.04 LTS (Noble Numbat)**, supported with security updates and bug fixes through May 2029.\n\n### Step-by-Step Official APT Installation Workflow:\n1. **Verify UTF-8 System Locale**:\n```bash\nlocale  # Confirm UTF-8 is active (e.g. en_US.UTF-8)\n```\n2. **Add Official ROS 2 GPG Archive Key**:\n```bash\nsudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg\n```\n3. **Add Official Repository to Sources List**:\n```bash\necho \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null\n```\n4. **Install Packages**:\n- For development workstations:\n```bash\nsudo apt update && sudo apt install -y ros-jazzy-desktop\n```\n- For headless onboard computers (e.g. Raspberry Pi 5):\n```bash\nsudo apt update && sudo apt install -y ros-jazzy-ros-base\n```\n5. **Auto-Source in ~/.bashrc**:\n```bash\necho \"source /opt/ros/jazzy/setup.bash\" >> ~/.bashrc\nsource ~/.bashrc\n```",
+    "concept": "ROS 2 Jazzy deb packages target **Ubuntu 24.04 LTS (Noble Numbat)**. Run these blocks from top to bottom and check that each one finishes without an error before continuing.\n\n### 1. Configure a UTF-8 locale\n```bash\nlocale\nsudo apt update && sudo apt install locales\nsudo locale-gen en_US en_US.UTF-8\nsudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8\nexport LANG=en_US.UTF-8\nlocale\n```\nA successful result shows `UTF-8` in `LANG` and `LC_ALL`.\n\n### 2. Enable Ubuntu Universe\n```bash\nsudo apt install software-properties-common\nsudo add-apt-repository universe\n```\n\n### 3. Install the ROS 2 APT source package\nThis package manages the signing keys and repository configuration, replacing the older manual `ros.key` method.\n```bash\nsudo apt update && sudo apt install curl -y\nexport ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F \"tag_name\" | awk -F'\"' '{print $4}')\ncurl -L -o /tmp/ros2-apt-source.deb \"https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo ${UBUNTU_CODENAME:-${VERSION_CODENAME}})_all.deb\"\nsudo dpkg -i /tmp/ros2-apt-source.deb\n```\n\n### 4. Update the system and install ROS 2\n```bash\nsudo apt update\nsudo apt upgrade\nsudo apt install ros-jazzy-desktop\n```\nFor a headless robot use `sudo apt install ros-jazzy-ros-base`. To build packages, also run `sudo apt update && sudo apt install ros-dev-tools`.\n\n### 5. Source the environment and test it\n```bash\nsource /opt/ros/jazzy/setup.bash\nros2 run demo_nodes_cpp talker\n```\nOpen a second terminal, source the setup file, then run `ros2 run demo_nodes_py listener`. Seeing `Hello World` on both sides confirms the installation.",
     "syntax": "source /opt/ros/jazzy/setup.bash",
     "syntaxExplanation": "Loads ROS 2 Jazzy binary executables, Python rclpy libraries, and CLI tools into your active shell session.",
     "examples": [

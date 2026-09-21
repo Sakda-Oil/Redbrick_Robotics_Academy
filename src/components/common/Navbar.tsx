@@ -24,6 +24,7 @@ import { useProgressStore } from "@/lib/store/progressStore";
 import { getTranslation } from "@/lib/i18n";
 import { SearchModal } from "./SearchModal";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { getLinuxCourse, getROS2Course } from "@/content";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -64,7 +65,10 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const totalLessonsEstimate = 32;
+  const totalLessonsEstimate = new Set([
+    ...getLinuxCourse(locale).modules.flatMap((module) => module.lessons.map((lesson) => lesson.id)),
+    ...getROS2Course(locale).modules.flatMap((module) => module.lessons.map((lesson) => lesson.id)),
+  ]).size;
   const progressPercent = Math.min(
     100,
     Math.round((completedLessons.length / totalLessonsEstimate) * 100)
@@ -81,9 +85,9 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-charcoal-800 bg-white/90 dark:bg-charcoal-900/90 backdrop-blur-md transition-colors">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 w-full items-center justify-between gap-3 px-4 sm:px-5 lg:px-6">
           {/* Logo & Brand */}
-          <div className="flex items-center gap-6">
+          <div className="flex min-w-0 items-center gap-3 lg:gap-4">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative h-11 w-11 shrink-0 flex items-center justify-center transition-transform group-hover:scale-105">
                 <Image
@@ -106,7 +110,7 @@ export function Navbar() {
             </Link>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1">
+            <nav className="hidden md:flex items-center gap-0.5 lg:gap-1">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname.startsWith(link.href);
@@ -114,7 +118,7 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
                       isActive
                         ? "bg-redbrick-50 text-redbrick-600 dark:bg-redbrick-950/50 dark:text-redbrick-400 font-semibold"
                         : "text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-charcoal-800"
@@ -129,7 +133,7 @@ export function Navbar() {
           </div>
 
           {/* Right Action Tools */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
             {/* Search Trigger */}
             <button
               onClick={() => setSearchOpen(true)}

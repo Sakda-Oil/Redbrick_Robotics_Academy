@@ -2,13 +2,18 @@
   "name": "redbrick-robotics-academy",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
-    "test": "jiti scripts/test-completion.mjs"
+    "test": "jiti scripts/test-completion.mjs && jiti scripts/test-ros-simulator.mjs",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

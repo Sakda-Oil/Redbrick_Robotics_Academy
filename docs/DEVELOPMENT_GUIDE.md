@@ -33,9 +33,8 @@ The system is constructed with three core decoupled pillars:
 | Directory Path | Architecture Role |
 | :--- | :--- |
 | `src/app/` | Next.js App Router route segments, layouts, and page entrypoints. |
-| `src/components/common/` | Shared UI components (Markdown parser, icons, modals). |
+| `src/components/common/` | Shared UI components (Navbar, Footer, Markdown parser, icons, modals). |
 | `src/components/course/` | Course-specific layouts: Sidebar, LessonHeader, Objectives, QuizEngine, ExerciseBox. |
-| `src/components/layout/` | Global application shell: Navbar, Footer, Providers. |
 | `src/components/simulator/` | Interactive tools: TerminalSimulator, ROSGraph, MobileRobotSimulator, LessonInteractiveLab, ROS2InstallationLab. |
 | `src/content/` | Curriculum data structures (`linuxData.ts`, `ros2Data.ts`), including `th/` and `en/` localized content trees. |
 | `src/lib/simulator/` | Pure TypeScript simulation core: `virtualFileSystem.ts`, `ros2Simulator.ts`, and `completion/completionEngine.ts`. |

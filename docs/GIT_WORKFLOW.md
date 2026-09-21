@@ -10,9 +10,9 @@ When developing on a desktop at work (Machine A) and continuing on a laptop at h
 
 ### First Time Setup on Machine B
 ```bash
-git clone <repository-url>
-cd redbrick-robotics-academy
-npm install
+git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
+cd Redbrick_Robotics_Academy
+npm ci
 npm run dev
 ```
 

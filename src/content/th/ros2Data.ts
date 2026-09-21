@@ -9,32 +9,26 @@ export const ROS2_COURSE_TH: CourseData = {
   "badge": "Ubuntu 24.04 LTS • มาตรฐาน Jazzy อย่างเป็นทางการ",
   "iconName": "Cpu",
   "accentColor": "#B5230E",
-  "totalModules": 11,
+  "totalModules": 4,
   "totalLessons": 11,
   "estimatedHours": 18,
   "modules": [
     {
       "id": "ros2-mod-1",
       "number": 1,
-      "title": "Beginner",
-      "description": "พื้นฐาน ROS 2 และการติดตั้ง",
+      "title": "First steps with ROS",
+      "description": "พื้นฐาน ROS 2 การติดตั้ง และการตั้งค่าสภาพแวดล้อม",
       "lessons": [
         {
           "id": "ros2-01",
           "slug": "01-introduction",
-          "title": "01. สถาปัตยกรรม ROS 2 และมิดเดิลแวร์ DDS",
+          "title": "สถาปัตยกรรม ROS 2 และมิดเดิลแวร์ DDS",
           "durationMinutes": 20
         },
         {
           "id": "ros2-02",
           "slug": "02-installation",
-          "title": "02. ติดตั้ง ROS 2 Jazzy บน Ubuntu 24.04",
-          "durationMinutes": 25
-        },
-        {
-          "id": "ros2-03",
-          "slug": "03-cli",
-          "title": "03. คำสั่ง CLI และการตรวจสอบระบบหุ่นยนต์",
+          "title": "ติดตั้ง ROS 2 Jazzy บน Ubuntu 24.04",
           "durationMinutes": 25
         }
       ]
@@ -42,25 +36,43 @@ export const ROS2_COURSE_TH: CourseData = {
     {
       "id": "ros2-mod-2",
       "number": 2,
-      "title": "Programming",
-      "description": "เวิร์กสเปซ การเขียนโหนด และ Launch",
+      "title": "Beginner: CLI tools",
+      "description": "ตรวจสอบและใช้งาน Node, Topic, Service, Parameter, Action และ Launch ผ่าน CLI",
       "lessons": [
         {
-          "id": "ros2-04",
-          "slug": "04-workspace",
-          "title": "04. เวิร์กสเปซ, colcon และระบบ Overlay",
-          "durationMinutes": 20
+          "id": "ros2-03",
+          "slug": "03-cli",
+          "title": "การใช้เครื่องมือ ROS 2 CLI",
+          "durationMinutes": 25
         },
         {
-          "id": "ros2-05",
-          "slug": "05-nodes",
-          "title": "05. เขียนโหนด ROS 2 ด้วย Python (rclpy)",
+          "id": "ros2-06",
+          "slug": "06-topics",
+          "title": "ทำความเข้าใจ Topics",
+          "durationMinutes": 30
+        },
+        {
+          "id": "ros2-07",
+          "slug": "07-services",
+          "title": "ทำความเข้าใจ Services",
+          "durationMinutes": 25
+        },
+        {
+          "id": "ros2-09",
+          "slug": "09-parameters",
+          "title": "ทำความเข้าใจ Parameters",
+          "durationMinutes": 25
+        },
+        {
+          "id": "ros2-08",
+          "slug": "08-actions",
+          "title": "ทำความเข้าใจ Actions",
           "durationMinutes": 30
         },
         {
           "id": "ros2-10",
           "slug": "10-launch",
-          "title": "10. Launch Files",
+          "title": "การเปิดใช้งาน Nodes ด้วย Launch",
           "durationMinutes": 30
         }
       ]
@@ -68,45 +80,33 @@ export const ROS2_COURSE_TH: CourseData = {
     {
       "id": "ros2-mod-3",
       "number": 3,
-      "title": "Robot Fundamentals",
-      "description": "Topics, Services, Actions, Parameters",
+      "title": "Beginner: Client libraries",
+      "description": "สร้าง Workspace และ Package แล้วเขียน Node ด้วย rclpy และ rclcpp",
       "lessons": [
         {
-          "id": "ros2-06",
-          "slug": "06-topics",
-          "title": "06. Topics (Pub/Sub)",
+          "id": "ros2-04",
+          "slug": "04-workspace",
+          "title": "ใช้ colcon และสร้าง Workspace",
+          "durationMinutes": 20
+        },
+        {
+          "id": "ros2-05",
+          "slug": "05-nodes",
+          "title": "เขียน Publisher และ Subscriber Nodes",
           "durationMinutes": 30
-        },
-        {
-          "id": "ros2-07",
-          "slug": "07-services",
-          "title": "07. Services (Client/Server)",
-          "durationMinutes": 25
-        },
-        {
-          "id": "ros2-08",
-          "slug": "08-actions",
-          "title": "08. Actions (Goal/Result)",
-          "durationMinutes": 30
-        },
-        {
-          "id": "ros2-09",
-          "slug": "09-parameters",
-          "title": "09. Parameters",
-          "durationMinutes": 25
         }
       ]
     },
     {
       "id": "ros2-mod-4",
       "number": 4,
-      "title": "Robot Applications",
-      "description": "การจำลองหุ่นยนต์และการทำงานจริง",
+      "title": "Intermediate",
+      "description": "เชื่อมต่อแอปพลิเคชัน ROS 2 กับระบบจำลองหุ่นยนต์",
       "lessons": [
         {
           "id": "ros2-11",
           "slug": "11-gazebo-harmonic",
-          "title": "11. Gazebo Harmonic",
+          "title": "ใช้ ROS 2 ร่วมกับ Gazebo Harmonic",
           "durationMinutes": 35
         }
       ]
@@ -240,43 +240,11 @@ export const ROS2_LESSONS_TH: Record<string, LessonContent> = {
     "durationMinutes": 25,
     "difficulty": "Beginner",
     "learningObjectives": [
-      "เพิ่มคีย์ APT และคลังแพ็กเกจอย่างเป็นทางการของ ROS 2 Jazzy บน Ubuntu 24.04 (Noble Numbat)",
+      "ติดตั้งแพ็กเกจ ros2-apt-source เพื่อเพิ่มคีย์และคลังแพ็กเกจทางการบน Ubuntu 24.04 (Noble Numbat)",
       "เข้าใจความแตกต่างระหว่าง 'ros-jazzy-desktop' และ 'ros-jazzy-ros-base'",
       "ตั้งค่า Environment Sourcing ในไฟล์ '~/.bashrc' เพื่อให้พร้อมใช้งานในทุกเทอร์มินัล"
     ],
-    
-    "lab": {
-      "id": "lab-install-01",
-      "title": "ปฏิบัติการติดตั้ง ROS 2 Jazzy",
-      "description": "จำลองการติดตั้ง ROS 2 บนเครื่อง Ubuntu 24.04 (Noble)",
-      "steps": [
-        {
-          "step": 1,
-          "title": "เพิ่ม GPG Key",
-          "instruction": "เพิ่ม GPG Key เข้าสู่ระบบเพื่อตรวจสอบความถูกต้องของแพ็กเกจ",
-          "task": "รันคำสั่ง sudo apt update ก่อน แต่ในขั้นตอนนี้ให้สมมติว่าคุณต้องการเพิ่มคีย์ ให้รัน 'sudo apt update' เป็นจุดเริ่มต้น",
-          "hint": "พิมพ์ sudo apt update",
-          "validationCommand": ["sudo apt update"]
-        },
-        {
-          "step": 2,
-          "title": "ติดตั้ง ROS 2 Desktop",
-          "instruction": "ทำการติดตั้งแพ็กเกจ ros-jazzy-desktop",
-          "task": "รันคำสั่ง apt install ด้วยสิทธิ์ sudo เพื่อติดตั้งแพ็กเกจ ros-jazzy-desktop (อย่าลืมใส่ -y ด้วยหรือไม่ใส่ก็ได้)",
-          "hint": "พิมพ์ sudo apt install ros-jazzy-desktop",
-          "validationCommand": ["sudo apt install ros-jazzy-desktop", "sudo apt install -y ros-jazzy-desktop"]
-        },
-        {
-          "step": 3,
-          "title": "ทดสอบคำสั่ง",
-          "instruction": "ตรวจสอบการติดตั้งด้วยการเรียกไฟล์ setup.bash",
-          "task": "ใช้คำสั่ง source เรียกไฟล์ setup.bash ของ jazzy",
-          "hint": "พิมพ์ source /opt/ros/jazzy/setup.bash",
-          "validationCommand": ["source /opt/ros/jazzy/setup.bash", ". /opt/ros/jazzy/setup.bash"]
-        }
-      ]
-    },
-    "concept": "ROS 2 Jazzy Jalisco คือเวอร์ชันสนับสนุนระยะยาว (LTS) ที่ทำงานคู่กับ **Ubuntu 24.04 LTS (Noble Numbat)** โดยได้รับการสนับสนุนการอัปเดตความปลอดภัยและการดูแลอย่างเป็นทางการจนถึงเดือนพฤษภาคม 2029\n\n### ขั้นตอนการติดตั้งอย่างเป็นทางการผ่าน APT:\n1. **ตรวจสอบ Locale ของระบบให้เป็น UTF-8**:\n```bash\nlocale  # ตรวจสอบว่าระบบใช้ UTF-8 (เช่น en_US.UTF-8)\n```\n2. **เพิ่ม GPG Key อย่างเป็นทางการของ ROS 2**:\n```bash\nsudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg\n```\n3. **เพิ่มคลังแพ็กเกจ ROS 2 เข้าสู่ Sources List**:\n```bash\necho \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main\" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null\n```\n4. **ติดตั้งแพ็กเกจที่เหมาะสม**:\n- สำหรับเครื่อง Workstation หรือโน้ตบุ๊กพัฒนา:\n```bash\nsudo apt update && sudo apt install -y ros-jazzy-desktop\n```\n- สำหรับคอมพิวเตอร์ออนบอร์ดบนตัวหุ่นยนต์ (เช่น Raspberry Pi 5):\n```bash\nsudo apt update && sudo apt install -y ros-jazzy-ros-base\n```\n5. **ตั้งค่า Auto-Source ใน ~/.bashrc**:\n```bash\necho \"source /opt/ros/jazzy/setup.bash\" >> ~/.bashrc\nsource ~/.bashrc\n```",
+    "concept": "ROS 2 Jazzy Jalisco ใช้แพ็กเกจ Deb อย่างเป็นทางการบน **Ubuntu 24.04 LTS (Noble Numbat)** ขั้นตอนด้านล่างเรียงตามคู่มือ ROS 2 ปัจจุบัน ให้รันจากบนลงล่างและตรวจว่าแต่ละชุดไม่มีข้อความ error ก่อนทำชุดถัดไป\n\n### 1. ตั้งค่า Locale เป็น UTF-8\n```bash\nlocale  # ตรวจสอบค่าปัจจุบันก่อน\nsudo apt update && sudo apt install locales\nsudo locale-gen en_US en_US.UTF-8\nsudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8\nexport LANG=en_US.UTF-8\nlocale\n```\nเมื่อสำเร็จ ค่า `LANG` และ `LC_ALL` ควรลงท้ายด้วย `UTF-8`\n\n### 2. เปิด Ubuntu Universe\n```bash\nsudo apt install software-properties-common\nsudo add-apt-repository universe\n```\n\n### 3. ติดตั้งแพ็กเกจ ROS 2 APT Source\nแพ็กเกจนี้ตั้งค่า signing key และ repository ให้โดยอัตโนมัติแทนวิธีเพิ่ม `ros.key` แบบเก่า\n```bash\nsudo apt update && sudo apt install curl -y\nexport ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F \"tag_name\" | awk -F'\"' '{print $4}')\ncurl -L -o /tmp/ros2-apt-source.deb \"https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo ${UBUNTU_CODENAME:-${VERSION_CODENAME}})_all.deb\"\nsudo dpkg -i /tmp/ros2-apt-source.deb\n```\n\n### 4. อัปเดตระบบและติดตั้ง ROS 2\n```bash\nsudo apt update\nsudo apt upgrade\nsudo apt install ros-jazzy-desktop\n```\nเครื่องหุ่นยนต์ที่ไม่มีหน้าจอเลือก `sudo apt install ros-jazzy-ros-base` ได้ และผู้ที่จะสร้างแพ็กเกจควรติดตั้งเครื่องมือเพิ่มด้วย `sudo apt update && sudo apt install ros-dev-tools`\n\n### 5. โหลดสภาพแวดล้อมและทดสอบ\n```bash\nsource /opt/ros/jazzy/setup.bash\nros2 run demo_nodes_cpp talker\n```\nเปิด Terminal ที่สอง รัน `source /opt/ros/jazzy/setup.bash` แล้วรัน `ros2 run demo_nodes_py listener` หากเห็นข้อความ `Hello World` ทั้งฝั่งส่งและรับ แสดงว่าติดตั้งสำเร็จ",
     "syntax": "source /opt/ros/jazzy/setup.bash",
     "syntaxExplanation": "โหลดพาธโปรแกรม ไบนารีคำสั่ง และโมดูล rclpy เข้าสู่สภาพแวดล้อมเชลล์ปัจจุบันของคุณ",
     "examples": [

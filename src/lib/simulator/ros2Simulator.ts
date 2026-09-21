@@ -75,11 +75,84 @@ export const INITIAL_ROS2_STATE: ROS2SystemState = {
   ],
 };
 
+export function simulateROSProgram(commandLine: string, sourceCode: string): TerminalCommandResult {
+  const isPython = commandLine.trim().startsWith("python3") || commandLine.endsWith(".py");
+  const language = isPython ? "Python" : "C++";
+
+  if (!sourceCode.trim()) {
+    return { output: `${language} source is empty. Add a ROS 2 node before running.`, exitCode: 1 };
+  }
+
+  if (isPython) {
+    if (!sourceCode.includes("import rclpy") || !sourceCode.includes("rclpy.init")) {
+      return {
+        output: "RuntimeError: ROS 2 Python programs must import rclpy and call rclpy.init().",
+        exitCode: 1,
+      };
+    }
+    if (!sourceCode.includes("Node")) {
+      return { output: "RuntimeError: no rclpy Node implementation was found.", exitCode: 1 };
+    }
+  } else if (!sourceCode.includes("rclcpp/rclcpp.hpp") || !sourceCode.includes("rclcpp::init")) {
+    return {
+      output: "Build failed: include rclcpp/rclcpp.hpp and call rclcpp::init() before running the node.",
+      exitCode: 1,
+    };
+  }
+
+  const nodeMatch = isPython
+    ? sourceCode.match(/super\(\).__init__\(['\"]([^'\"]+)['\"]\)/)
+    : sourceCode.match(/Node\(['\"]([^'\"]+)['\"]\)/);
+  const nodeName = nodeMatch?.[1] || "redbrick_node";
+
+  if (sourceCode.includes("create_publisher")) {
+    const topicMatch = sourceCode.match(/create_publisher[\s\S]*?['\"](\/[^'\"]+|topic)['\"]/);
+    const topic = topicMatch?.[1] || "/topic";
+    const message = sourceCode.includes("Twist")
+      ? "linear.x=0.25 angular.z=0.0"
+      : 'data="Hello World: 0"';
+    return {
+      output: `[build] ${language} source validated\n[INFO] [${nodeName}]: node started\n[INFO] [${nodeName}]: publishing ${message} on ${topic}`,
+      exitCode: 0,
+    };
+  }
+
+  if (sourceCode.includes("create_subscription")) {
+    return {
+      output: `[build] ${language} source validated\n[INFO] [${nodeName}]: node started\n[INFO] [${nodeName}]: I heard: "Hello World: 0"`,
+      exitCode: 0,
+    };
+  }
+
+  if (sourceCode.includes("create_service")) {
+    return {
+      output: `[build] ${language} source validated\n[INFO] [${nodeName}]: service ready and waiting for requests`,
+      exitCode: 0,
+    };
+  }
+
+  if (sourceCode.includes("ActionServer") || sourceCode.includes("create_server")) {
+    return {
+      output: `[build] ${language} source validated\n[INFO] [${nodeName}]: action server ready for goals`,
+      exitCode: 0,
+    };
+  }
+
+  return {
+    output: `[build] ${language} source validated\n[INFO] [${nodeName}]: node started successfully`,
+    exitCode: 0,
+  };
+}
+
 export class ROS2Simulator {
   private state: ROS2SystemState;
 
   constructor(initialState: ROS2SystemState = INITIAL_ROS2_STATE) {
     this.state = initialState;
+  }
+
+  public executeProgram(commandLine: string, sourceCode: string): TerminalCommandResult {
+    return simulateROSProgram(commandLine, sourceCode);
   }
 
   public execute(commandLine: string): TerminalCommandResult | null {

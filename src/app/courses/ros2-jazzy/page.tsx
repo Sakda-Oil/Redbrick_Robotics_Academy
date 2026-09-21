@@ -11,6 +11,7 @@ import {
   Circle,
   Gauge,
   PlaySquare,
+  ExternalLink,
 } from "lucide-react";
 import { getROS2Course } from "@/content";
 import { useProgressStore } from "@/lib/store/progressStore";
@@ -89,7 +90,7 @@ export default function ROS2CoursePage() {
                   className="flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-lg border border-gray-200 dark:border-charcoal-700 bg-white dark:bg-charcoal-800 text-xs font-semibold text-gray-700 dark:text-gray-200 hover:border-redbrick-500 transition-colors"
                 >
                   <PlaySquare className="h-3.5 w-3.5 text-redbrick-600" />
-                  <span>{locale === "th" ? "สนามทดลองจำลอง ROS Graph" : "Interactive Playground"}</span>
+                  <span>{locale === "th" ? "สนามทดลองหุ่นยนต์ ROS 2" : "Interactive Robot Playground"}</span>
                 </Link>
               </div>
             </div>
@@ -102,9 +103,15 @@ export default function ROS2CoursePage() {
             <h2 className="text-xl font-bold text-charcoal-900 dark:text-white font-heading">
               {t.course.curriculum}
             </h2>
-            <span className="text-xs text-gray-400 font-mono">
-              Ubuntu 24.04 Noble + ROS 2 Jazzy
-            </span>
+            <a
+              href="https://docs.ros.org/en/jazzy/Tutorials.html"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-redbrick-600 font-mono transition-colors"
+            >
+              <span>Official ROS 2 Jazzy Tutorials</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
           </div>
 
           <div className="space-y-4">

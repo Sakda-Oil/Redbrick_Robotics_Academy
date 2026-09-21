@@ -9,7 +9,7 @@ This guide lists the exact, verified file locations for modifying every componen
 | Feature / Area | Exact File Path in Repository |
 | :--- | :--- |
 | **Homepage & Hero Section** | [`src/app/page.tsx`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/app/page.tsx) |
-| **Top Navigation Bar (Navbar)** | [`src/components/layout/Navbar.tsx`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/components/layout/Navbar.tsx) |
+| **Top Navigation Bar (Navbar)** | `src/components/common/Navbar.tsx` |
 | **Course Sidebar Navigation** | [`src/components/course/CourseSidebar.tsx`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/components/course/CourseSidebar.tsx) |
 | **Lesson Page Template / Layout** | [`src/components/course/LessonPageLayout.tsx`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/components/course/LessonPageLayout.tsx) |
 | **Linux Course Curriculum (Default)** | [`src/content/linuxData.ts`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/content/linuxData.ts) |
@@ -46,7 +46,7 @@ This guide lists the exact, verified file locations for modifying every componen
 
 ## 🧭 2. Editing Navbar & Course Sidebar
 
-- **Navbar**: Open [`src/components/layout/Navbar.tsx`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/components/layout/Navbar.tsx).
+- **Navbar**: Open `src/components/common/Navbar.tsx`.
   - Add or remove navigation links (Courses, Playground, Cheatsheet).
   - Modify language switcher button behavior.
 - **Sidebar**: Open [`src/components/course/CourseSidebar.tsx`](file:///Users/oil/Documents/Antigravity/Redbrick_Docs/src/components/course/CourseSidebar.tsx).

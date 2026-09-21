@@ -44,13 +44,13 @@ npm -v    # Should output 10.x or 11.x
 
 ### Step 2: Clone the Repository
 ```bash
-git clone <repository-url>
-cd redbrick-robotics-academy
+git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
+cd Redbrick_Robotics_Academy
 ```
 
 ### Step 3: Install Dependencies
 ```bash
-npm install
+npm ci
 ```
 
 ### Step 4: Environment Variables (Optional)
@@ -90,13 +90,13 @@ npm -v
 ### Step 2: Clone the Repository
 Open **PowerShell** or **Git Bash**:
 ```powershell
-git clone <repository-url>
-cd redbrick-robotics-academy
+git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
+cd Redbrick_Robotics_Academy
 ```
 
 ### Step 3: Install Dependencies
 ```powershell
-npm install
+npm ci
 ```
 
 ### Step 4: Environment Variables (Optional)
@@ -138,13 +138,13 @@ npm -v    # Should output 10.x.x
 
 ### Step 3: Clone the Repository
 ```bash
-git clone <repository-url>
-cd redbrick-robotics-academy
+git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
+cd Redbrick_Robotics_Academy
 ```
 
 ### Step 4: Install Dependencies
 ```bash
-npm install
+npm ci
 ```
 
 ### Step 5: Environment Variables (Optional)

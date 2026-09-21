@@ -10,11 +10,11 @@ This platform combines rich curriculum content with interactive, in-browser simu
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Redbrick-Robotics/redbrick-robotics-academy.git
-cd redbrick-robotics-academy
+git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
+cd Redbrick_Robotics_Academy
 
 # 2. Install dependencies
-npm install
+npm ci
 
 # 3. Start local development server
 npm run dev
@@ -38,7 +38,7 @@ Open [http://localhost:3000](http://localhost:3000) in your web browser.
   - **ROS 2 Computational Graph**: Graph topology visualizer showing active nodes, topics, publishers, and subscribers.
   - **2D Mobile Robot Simulator**: Differential-drive kinematics, 360° LiDAR raycasting, real-time `/cmd_vel` keyboard teleop, and `/odom` position feedback.
 - **Pedagogical Workflow**: Progressive disclosure in course lessons (`Lesson → Practice → Result`) eliminating multi-window clutter.
-- **ROS 2 Developer Playground**: Dedicated sandbox (`/playground/ros2`) featuring the full 4-panel environment for unrestricted experimentation.
+- **ROS 2 Developer Playground**: Dedicated sandbox (`/playground/ros2`) with a code editor, interactive terminal, and autonomous 2D mobile robot lab.
 - **Progress Tracking**: Local storage persistence for lesson completion, quizzes, exercises, font sizing, and language preference.
 
 ---
@@ -69,13 +69,13 @@ Open [http://localhost:3000](http://localhost:3000) in your web browser.
 
 ### Clone Repository
 ```bash
-git clone <repository-url>
-cd redbrick-robotics-academy
+git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git
+cd Redbrick_Robotics_Academy
 ```
 
 ### Install Dependencies
 ```bash
-npm install
+npm ci
 ```
 
 ### Environment Configuration (Optional)
@@ -119,7 +119,7 @@ npm run start
 ## 📁 Project Directory Structure
 
 ```text
-redbrick-robotics-academy/
+Redbrick_Robotics_Academy/
 ├── .github/
 │   └── workflows/ci.yml         # Automated GitHub Actions CI
 ├── .vscode/
@@ -149,9 +149,8 @@ redbrick-robotics-academy/
 │   │   ├── cheatsheet/          # Interactive CLI Cheatsheets
 │   │   └── playground/          # Developer Sandbox (/playground/ros2)
 │   ├── components/              # React Components
-│   │   ├── common/              # Common UI (MarkdownRenderer, etc.)
+│   │   ├── common/              # Common UI (Navbar, Footer, MarkdownRenderer, etc.)
 │   │   ├── course/              # Course Layout, Sidebar, Header, Quizzes
-│   │   ├── layout/              # Navbar, Footer, Providers
 │   │   └── simulator/           # Terminal, VFS, ROSGraph, RobotSimulator
 │   ├── content/                 # Course Curriculum & Lesson Data
 │   │   ├── en/                  # English content modules
@@ -183,7 +182,7 @@ Looking to make changes? Use this direct lookup:
 | What you want to edit | Primary File Path |
 | :--- | :--- |
 | **Homepage & Hero** | `src/app/page.tsx` |
-| **Navbar & Header Navigation** | `src/components/layout/Navbar.tsx` |
+| **Navbar & Header Navigation** | `src/components/common/Navbar.tsx` |
 | **Course Sidebar Navigation** | `src/components/course/CourseSidebar.tsx` |
 | **Linux Course Content (Default)** | `src/content/linuxData.ts` |
 | **Linux Content (Thai / English)** | `src/content/th/linuxData.ts` / `src/content/en/linuxData.ts` |
@@ -210,9 +209,9 @@ Setting up on a new machine? Check off each step:
 
 - [ ] **Install Git**: Check with `git --version`
 - [ ] **Install Node.js 22 LTS**: Check with `node -v` (v20+ or v22+)
-- [ ] **Clone repository**: `git clone <repository-url>`
-- [ ] **Enter folder**: `cd redbrick-robotics-academy`
-- [ ] **Install dependencies**: `npm install`
+- [ ] **Clone repository**: `git clone https://github.com/Sakda-Oil/Redbrick_Robotics_Academy.git`
+- [ ] **Enter folder**: `cd Redbrick_Robotics_Academy`
+- [ ] **Install dependencies**: `npm ci`
 - [ ] **Optional setup**: `cp .env.example .env.local`
 - [ ] **Run dev server**: `npm run dev`
 - [ ] **Verify browser**: Open `http://localhost:3000`
@@ -253,6 +252,7 @@ When working across multiple computers or team members:
 All extended guides are available in the [`docs/`](docs/) directory:
 
 - 📘 [Setup Guide (macOS / Windows / Linux)](docs/SETUP_GUIDE.md)
+- 🇹🇭 [คู่มือ Build และพัฒนาต่อบนเครื่องอื่น ฉบับละเอียด](docs/BUILD_AND_TRANSFER_GUIDE_TH.md)
 - 🏗 [Development & Architecture Guide](docs/DEVELOPMENT_GUIDE.md)
 - ✏️ [Editing & Content Reference](docs/EDITING_GUIDE.md)
 - 🗂 [File Safety Guide](docs/FILE_GUIDE.md)

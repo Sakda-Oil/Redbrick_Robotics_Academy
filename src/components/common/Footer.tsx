@@ -99,7 +99,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/playground/ros2" className="hover:text-redbrick-600 dark:hover:text-redbrick-400 transition-colors font-medium text-redbrick-600 dark:text-redbrick-400">
-                  → {locale === "th" ? "สนามทดลองจำลอง ROS Graph" : "Interactive ROS Graph Playground"}
+                  → {locale === "th" ? "สนามทดลองหุ่นยนต์ ROS 2" : "Interactive Robot Playground"}
                 </Link>
               </li>
               <li>
